@@ -1,15 +1,29 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'master'
+    }
+    
+  }
   stages {
-    stage('Shell Commands') {
+    stage('Git Repo') {
       steps {
-        sh 'echo Hello World - Stage1 step1'
-        sh 'echo Hello Stage1 Step2'
+        git(url: 'https://github.com/cit-latex/t1-student-maven-proj.git', branch: 'master')
       }
     }
-    stage('Some commands') {
+    stage('Maven Compile') {
       steps {
-        sh 'echo some thing'
+        sh 'mvn compile package'
+      }
+    }
+    stage('Upload Artifacts') {
+      steps {
+        sh 'mvn deploy'
+      }
+    }
+    stage('Ansible-Deploy') {
+      steps {
+        sh 'ansible --version'
       }
     }
   }
