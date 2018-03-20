@@ -6,9 +6,9 @@ pipeline {
     
   }
   stages {
-    stage('') {
+    stage('error') {
       steps {
-        sh 'ls'
+        git(url: 'https://github.com/cit-latex/t1-student-maven-proj.git', branch: 'master')
       }
     }
   }
